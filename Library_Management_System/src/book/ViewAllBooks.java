@@ -1,4 +1,4 @@
-package Book;
+package book;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -7,11 +7,7 @@ import java.sql.*;
 import java.util.Properties;
 
 public class ViewAllBooks {
-	public static void main(String[] args) {
 
-		ViewAllBooks vb = new ViewAllBooks();
-		vb.viewAllBooks();
-	}
 
 	public void viewAllBooks() {
 		System.out.println("---- View Books ----");
