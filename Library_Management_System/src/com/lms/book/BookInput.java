@@ -9,27 +9,48 @@ public class BookInput implements BookDAO{
 	static Scanner input = new Scanner(System.in);
 	BookDAOImpl setInput = new BookDAOImpl();
 	InputValidator validate = new InputValidator();
+	
+	public static void main (String [] args) {
+		BookInput bIn = new BookInput();
+		bIn.addBook();
+	}
 
 	@Override
-	public void addBook() {
-		System.out.println("---- Add Book ----");
-		System.out.print("Enter Book Id: ");
-		int id = input.nextInt();
-		input.nextLine();
+	public void addBook() { 
+		System.out.println("---- Add Book ----");		
 		System.out.print("Enter Book Title: ");
 		String title = input.nextLine();
+		if(!validate.validNamePattern(title)) {
+			System.err.println("Id only contains whole numbers");
+			return;
+		}
 		System.out.print("Enter Name of Author: ");
 		String author = input.nextLine();
+		if(!validate.validNamePattern(author)) {
+			System.err.println("Author name only contains A - Z and/or a-z");
+			return;
+		}
 		System.out.print("Enter Published Year: ");
 		int year = input.nextInt();
 		input.nextLine();
+		if(!validate.validYear(year)) {
+			System.err.println("Ensure the entered year was correct");
+			return;
+		}
 		System.out.print("Enter Publisher Name: ");
 		String publisherName = input.nextLine();
+		if(!validate.validNamePattern(publisherName)) {
+			System.err.println("Publisher Name only contains A - Z and/or a-z");
+			return;
+		}
 		System.out.print("Enter Gener Type: ");
 		String genre = input.nextLine();
+		if(!validate.validGenre(genre)) {
+			System.err.println("Genre only contains A - Z and/or a-z");
+			return;
+		}
 		
-		
-		setInput.addBook(new Book(id,title,author,year,publisherName,genre));
+		setInput.addBook(new Book(title,author,year,publisherName,genre));
 	}
 
 	@Override
@@ -37,7 +58,11 @@ public class BookInput implements BookDAO{
 		System.out.println("---- Update book ----");
 		System.out.print("Enter Book Id: ");
 		int id = input.nextInt();
-		input.nextLine(); // consume newline
+		input.nextLine(); // consume 
+		if(!validate.validId(id)) {
+			System.err.println("Id only contains whole numbers");
+			return;
+		}
 		if (validate.verifyId(id)) {
 			boolean flag = true;
 			while (flag) {
@@ -54,26 +79,46 @@ public class BookInput implements BookDAO{
 				case 1 -> {
 					System.out.print("Enter Book Title: ");
 					value = input.nextLine();
+					if(!validate.validNamePattern((String)value)) {
+						System.err.println("Book Title only contains set of characters and/or sentences.");
+						break;
+					}
 					query = "UPDATE book SET title = ? WHERE id=?";
 				}
 				case 2 -> {
 					System.out.print("Enter Name of Author: ");
 					value = input.nextLine();
+					if(!validate.validNamePattern((String)value)) {
+						System.err.println("Author name only contains A - Z and/or a-z");
+						break;
+					}
 					query = "UPDATE book SET author = ? WHERE id=?";
 				}
 				case 3 -> {
 					System.out.print("Enter Published Year: ");
 					value = input.nextInt();
+					if(!validate.validYear((int) value)) {
+						System.err.println("Ensure the entered year was correct");
+						break;
+					}
 					query = "UPDATE book SET yearPublished = ? WHERE id=?";
 				}
 				case 4 -> {
 					System.out.print("Enter Publisher Name: ");
 					value = input.nextLine();
+					if(!validate.validNamePattern((String)value)) {
+						System.err.println("Publisher Name only contains A - Z and/or a-z");
+						break;
+					}
 					query = "UPDATE book SET publisher = ? WHERE id=?";
 				}
 				case 5 -> {
 					System.out.print("Enter Genre Type: ");
 					value = input.nextLine();
+					if(!validate.validGenre((String) value)) {
+						System.err.println("Genre only contains A - Z and/or a-z");
+						break;
+					}
 					query = "UPDATE book SET genre = ? WHERE id=?";
 					System.out.println("----------");
 				}
@@ -98,19 +143,6 @@ public class BookInput implements BookDAO{
 	}
 
 	@Override
-	public void deleteBook() {
-		System.out.println("---- Delete Book ----");
-		System.out.print("Enter Book Id: ");
-		int id = input.nextInt();
-		if(validate.verifyId(id)) {
-			setInput.deleteBook(id);
-		}else {
-			System.out.println("Given Book not in Library");
-		}
-		
-	}
-
-	@Override
 	public void searchBook() {
 		boolean flag = true;
 		while (flag) {
@@ -125,32 +157,56 @@ public class BookInput implements BookDAO{
 				case 1 -> {
 					System.out.print("Enter Book ID: ");
 					value = input.nextLine();
+					if(!validate.validId((int)value)) {
+						System.err.println("Id only contains whole numbers");
+						break;
+					}
 					query = "SELECT * FROM book WHERE id=?";
 				}
 				case 2 -> {
 					System.out.print("Enter Book Title: ");
 					value = input.nextLine();
+					if(!validate.validNamePattern((String)value)) {
+						System.err.println("Book Title only contains set of characters and/or sentences");
+						break;
+					}
 					query = "SELECT * FROM book WHERE title=?";
 				}
 				case 3 -> {
 					System.out.print("Enter Name of Author: ");
 					value = input.nextLine();
+					if(!validate.validNamePattern((String)value)) {
+						System.err.println("Author name only contains A - Z and/or a-z");
+						break;
+					}
 					query = "SELECT * FROM book WHERE author=?";
 								}
 				case 4 -> {
 					System.out.print("Enter Published Year: ");
 					value = input.nextInt();
+					if(!validate.validYear((int) value)) {
+						System.err.println("Ensure the entered year was correct");
+						break;
+					}
 					query = "SELECT * FROM book WHERE year=?";
 					
 				}
 				case 5 -> {
 					System.out.print("Enter Publisher Name: ");
 					value = input.nextLine();
+					if(!validate.validNamePattern((String)value)) {
+						System.err.println("Publisher name only contains A - Z and/or a-z");
+						break;
+					}
 					query = "SELECT * FROM book WHERE publisher=?";
 				}
 				case 6 -> {
 					System.out.print("Enter Genre Type: ");
 					value = input.nextLine();
+					if(!validate.validGenre((String)value)) {
+						System.err.println("Genre only contains set of characters and/or words and allowed symbol is ',' (comma)");
+						break;
+					}
 					query = "SELECT * FROM book WHERE genre=?";
 				}
 				case 7 -> {
@@ -182,20 +238,38 @@ public class BookInput implements BookDAO{
 				case 2->{
 					System.out.print("Enter the Year:");
 					int year = input.nextInt();
+					if(!validate.validYear(year)) {
+						System.err.println("Ensure the entered year was correct");
+						break;
+					}
+					
 					setInput.viewBooksAfterYear(year);
 					
 				}
 				case 3->{
 					System.out.print("Enter the Start Year:");
 					int start = input.nextInt();		
+					if(!validate.validYear(start)) {
+						System.err.println("Ensure the entered year was correct");
+						break;
+					}
 					System.out.print("Enter the End Year:");
 					int end = input.nextInt();
+					if(!validate.validYear(start)) {
+						System.err.println("Ensure the entered year was correct");
+						break;
+					}
 					setInput.viewBooksBetweenSomeYear(start,end);
 				}
 				case 4->{
 					input.nextLine();
 					System.out.println("Enter Title");
 					String title = input.nextLine();
+					if(!validate.validNamePattern(title)) {
+						System.err.println("Title only have set of characters or sentence");
+						return;
+					}
+					
 					setInput.viewBookBasedOnName(title);
 				}
 				case 5->{
@@ -220,8 +294,24 @@ public class BookInput implements BookDAO{
 				}
 			}
 		
-		
 		}
+	}
+	
+	@Override
+	public void deleteBook() {
+		System.out.println("---- Delete Book ----");
+		System.out.print("Enter Book Id: ");
+		int id = input.nextInt();
+		if(!validate.validId(id)) {
+			System.err.println("Id only contains whole numbers");
+			return;
+		}
+		if(validate.verifyId(id)) {
+			setInput.deleteBook(id);
+		}else {
+			System.out.println("Given Book not in Library");
+		}
+		
 	}
 
 }

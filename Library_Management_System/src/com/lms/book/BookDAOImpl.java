@@ -23,14 +23,14 @@ public class BookDAOImpl{
 //	}
 	
 	public void addBook(Book book) {
-		String query = "INSERT INTO book VALUES(?,?,?,?,?,?)";
+		String query = "INSERT INTO book VALUES(?,?,?,?,?)";
 		try(PreparedStatement ps = con.prepareStatement(query)){
-			ps.setInt(1, book.getId());
-			ps.setString(2, book.getTitle());
-			ps.setString(3, book.getAuthor());
-			ps.setInt(4, book.getYear());
-			ps.setString(5, book.getPublisherName());
-			ps.setString(6, book.getGenre());
+//			ps.setInt(1, book.getId());
+			ps.setString(1, book.getTitle());
+			ps.setString(2, book.getAuthor());
+			ps.setInt(3, book.getYear());
+			ps.setString(4, book.getPublisherName());
+			ps.setString(5, book.getGenre());
 			// 4.Execute Query
 			ps.executeUpdate();
 			System.out.println("Book Added Successfully");

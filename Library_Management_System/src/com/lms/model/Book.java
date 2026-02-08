@@ -11,8 +11,8 @@ public class Book {
 	
 	public Book(){}
 	
-	public Book(int id, String title, String author, int year, String publisherName, String genre){
-		this.id = id;
+	public Book( String title, String author, int year, String publisherName, String genre){
+//		this.id = id;
 		this.title = title;
 		this.author = author;
 		this.year = year;
@@ -23,9 +23,9 @@ public class Book {
 	// setters and getters
 	
 	// Book Id
-	public void setId(int id) {
-		this.id = id;
-	}
+//	public void setId(int id) {
+//		this.id = id;
+//	}
 	public int getId() {
 		return id;
 	}
