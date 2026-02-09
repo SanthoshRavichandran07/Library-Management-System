@@ -20,21 +20,21 @@ This project demonstrates **CRUD operations**, **input validation**, and **datab
 
 ---
 
-## Project Architecture
+## Project Structure
 
 ```
 src
 |- com.lms.book
-|  |- BookDAO.java -> Interface defining CRUD operations
-|  |- BookInput.java -> Collects user input, validates it, and passes it to DAO
-|  |- BookDAOImpl.java -> Executes SQL queries with JDBC
+|  |- BookDAO.java
+|  |- BookInput.java
+|  |- BookDAOImpl.java
 |- com.lms.model
-|  |- Book.java -> Model class representing a book entity
+|  |- Book.java
 |- com.lms.util
-|  |- DBConnection.java -> Utility class for establishing database connections via `db.properties`
+|  |- DBConnection.java
 |- com.lms.validator
-|  |- InputValidator.java -> Ensures data integrity (regex + DB checks)
-|  |- MainMenu.java -> Entry point, handles user interaction and menu navigation
+|  |- InputValidator.java
+|  |- MainMenu.java
 ```
 
 ---
