@@ -26,18 +26,19 @@ This project demonstrates **CRUD operations**, **input validation**, and **datab
 src
 |- com.lms.book
 |  |- BookDAO.java -> Interface defining CRUD operations
-|  |- **BookInput.java** -> Collects user input, validates it, and passes it to DAO
-|  |- **BookDAOImpl.java** -> Executes SQL queries with JDBC
+|  |- BookInput.java -> Collects user input, validates it, and passes it to DAO
+|  |- BookDAOImpl.java -> Executes SQL queries with JDBC
 |- com.lms.model
-|  |- **Book.java** -> Model class representing a book entity
+|  |- Book.java -> Model class representing a book entity
 |- com.lms.util
-|  |- **DBConnection.java** -> Utility class for establishing database connections via `db.properties`
+|  |- DBConnection.java -> Utility class for establishing database connections via `db.properties`
 |- com.lms.validator
-|  |- **InputValidator.java** -> Ensures data integrity (regex + DB checks)
-|  |- **MainMenu.java** -> Entry point, handles user interaction and menu navigation
+|  |- InputValidator.java -> Ensures data integrity (regex + DB checks)
+|  |- MainMenu.java -> Entry point, handles user interaction and menu navigation
 ```
 
 ---
+
 ## Execution Order
 - **MainMenu.java** -> Entry point, handles user interaction and menu navigation
 - **BookDAO.java** -> Interface defining CRUD operations
@@ -46,6 +47,7 @@ src
 - **Book.java** -> Model class representing a book entity
 - **BookDAOImpl.java** -> Executes SQL queries with JDBC
 - **DBConnection.java** -> Utility class for establishing database connections via `db.properties`
+
 ---
 
 ## Tech Stack
@@ -83,6 +85,7 @@ src
 
 4. Compile and Run
 
+---
 
 ## Author
 **Santhosh Ravichandran**  
