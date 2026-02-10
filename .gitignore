@@ -4,3 +4,12 @@
 /.classpath
 /db.properties
 *.log
+
+### Environment variable files ###
+*.env
+
+### Libraries directory ###
+lib/*
+
+### Executable Files ###
+*.exe
