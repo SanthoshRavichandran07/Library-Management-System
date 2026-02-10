@@ -229,11 +229,12 @@ public class BookInput implements BookDAO{
 		
 		boolean viewBook = true;
 		while(viewBook) {
-			System.out.println("1. View All Books \n2. View Books after a year\n3. View Books between some year\n4. View Books based on title\n5. View Books by Title \n6. View Books by Year\n7. View Title, Author & Genre\n8. Go Back <-");
+			System.out.print("1. View All Books \n2. View Books after a year\n3. View Books between some year\n4. View Books based on title\n5. View Books by Title \n6. View Books by Year\n7. View Title, Author & Genre\n8. Go Back <-\nChoose Options:");
 			int viewBookInput = input.nextInt();
 			switch(viewBookInput) {
 				case 1->{
-					setInput.viewAllBooks();					
+					setInput.viewAllBooks();
+					System.out.println("----------");
 				}
 				case 2->{
 					System.out.print("Enter the Year:");
@@ -244,6 +245,7 @@ public class BookInput implements BookDAO{
 					}
 					
 					setInput.viewBooksAfterYear(year);
+					System.out.println("----------");
 					
 				}
 				case 3->{
@@ -260,6 +262,7 @@ public class BookInput implements BookDAO{
 						break;
 					}
 					setInput.viewBooksBetweenSomeYear(start,end);
+					System.out.println("----------");
 				}
 				case 4->{
 					input.nextLine();
@@ -271,17 +274,21 @@ public class BookInput implements BookDAO{
 					}
 					
 					setInput.viewBookBasedOnName(title);
+					System.out.println("----------");
 				}
 				case 5->{
 					setInput.viewBooksByTitle();
+					System.out.println("----------");
 					
 				}
 				case 6->{
 					setInput.viewBooksByYear();
+					System.out.println("----------");
 					
 				}
 				case 7->{
 					setInput.viewBooksByTitleAuthorGenre();
+					System.out.println("----------");
 					
 				}
 				case 8->{
@@ -291,6 +298,7 @@ public class BookInput implements BookDAO{
 				}
 				default ->{
 					System.out.println("Invalid Choice...!");
+					System.out.println("----------");
 				}
 			}
 		

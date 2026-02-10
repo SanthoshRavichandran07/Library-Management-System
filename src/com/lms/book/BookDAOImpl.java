@@ -5,27 +5,14 @@ import java.sql.*;
 import com.lms.util.DBConnection;
 import com.lms.model.Book;
 
+public class BookDAOImpl {
 
-public class BookDAOImpl{
-	
-	Connection con = DBConnection.getConnection();
-	
-	// ---- Manual Testing -----
-//	public static void main(String[] args) {
-//		BookDAOImpl nbs = new BookDAOImpl();
-//		nbs.viewBookBasedOnName("The");
-//		System.out.println("------");
-//		nbs.viewBooksByTitleAuthorGenre();
-//		System.out.println("------");
-//		nbs.viewBooksByTitle();
-//		System.out.println("------");
-//		nbs.viewBooksByYear();
-//	}
-	
+	Connection con = null;
+
 	public void addBook(Book book) {
+		con = DBConnection.getConnection();
 		String query = "INSERT INTO book VALUES(?,?,?,?,?)";
-		try(PreparedStatement ps = con.prepareStatement(query)){
-//			ps.setInt(1, book.getId());
+		try (PreparedStatement ps = con.prepareStatement(query)) {
 			ps.setString(1, book.getTitle());
 			ps.setString(2, book.getAuthor());
 			ps.setInt(3, book.getYear());
@@ -36,13 +23,22 @@ public class BookDAOImpl{
 			System.out.println("Book Added Successfully");
 			System.out.println("Thank you...!");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	public void updateBook(int id, Object value, String query) {
-		
+		con = DBConnection.getConnection();
+
 		try {
 			PreparedStatement ps = con.prepareStatement(query);
 			if (value instanceof String) {
@@ -54,32 +50,51 @@ public class BookDAOImpl{
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-		
-		
+
 		System.out.println("Book Updated..!");
-		
+
 	}
 
 	public void deleteBook(int id) {
-		
+
+		con = DBConnection.getConnection();
 		String query = "DELETE FROM book WHERE id = ?";
 		PreparedStatement ps;
 		try {
 			ps = con.prepareStatement(query);
 			ps.setInt(1, id);
-			
+
 			ps.executeUpdate();
-			
+
 			System.out.println("Book Deleted..!");
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-		
+
 	}
 
 	public void searchBook(Object value, String query) {
-		
+
+		con = DBConnection.getConnection();
 		try {
 			PreparedStatement ps = con.prepareStatement(query);
 			if (value instanceof String) {
@@ -103,11 +118,21 @@ public class BookDAOImpl{
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-		
+
 	}
 
 	public void viewAllBooks() {
+		con = DBConnection.getConnection();
 		String query = "SELECT * FROM book ORDER BY id";
 		try {
 			Statement st = con.createStatement();
@@ -125,15 +150,25 @@ public class BookDAOImpl{
 				System.out.println("No books found.");
 			}
 		} catch (SQLException e) {
-		e.printStackTrace();
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
-	}
-	
+
 	public void viewBooksAfterYear(int year) {
+		con = DBConnection.getConnection();
 		String query = "SELECT * FROM book WHERE yearPublished > ?";
 		try {
 			PreparedStatement ps = con.prepareStatement(query);
-				ps.setInt(1,year);
+			ps.setInt(1, year);
 			ResultSet rs = ps.executeQuery();
 
 			boolean hasBooks = false;
@@ -147,18 +182,27 @@ public class BookDAOImpl{
 			if (!hasBooks) {
 				System.out.println("No books found.");
 			}
-//			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
-	
-	public void viewBooksBetweenSomeYear(int start,int end) {
+
+	public void viewBooksBetweenSomeYear(int start, int end) {
+		con = DBConnection.getConnection();
 		String query = "SELECT * FROM book WHERE yearPublished BETWEEN ? AND ? ORDER BY yearPublished";
 		try {
 			PreparedStatement ps = con.prepareStatement(query);
-				ps.setInt(1,start);
-				ps.setInt(2,end);
+			ps.setInt(1, start);
+			ps.setInt(2, end);
 			ResultSet rs = ps.executeQuery();
 
 			boolean hasBooks = false;
@@ -175,14 +219,24 @@ public class BookDAOImpl{
 //			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
-	
+
 	public void viewBookBasedOnName(String bookName) {
+		con = DBConnection.getConnection();
 		String query = "SELECT * FROM book WHERE title LIKE ?";
 		try {
 			PreparedStatement ps = con.prepareStatement(query);
-				ps.setString(1,"%"+bookName+"%");
+			ps.setString(1, "%" + bookName + "%");
 			ResultSet rs = ps.executeQuery();
 
 			boolean hasBooks = false;
@@ -196,14 +250,22 @@ public class BookDAOImpl{
 			if (!hasBooks) {
 				System.out.println("No books found.");
 			}
-//			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
-	
 
 	public void viewBooksByTitle() {
+		con = DBConnection.getConnection();
 		String query = "SELECT * FROM book ORDER BY title";
 		try {
 			Statement ps = con.createStatement();
@@ -223,9 +285,21 @@ public class BookDAOImpl{
 //			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
 		}
 	}
+
 	public void viewBooksByYear() {
+		con = DBConnection.getConnection();
 		String query = "SELECT * FROM book ORDER BY yearPublished";
 		try {
 			Statement ps = con.createStatement();
@@ -245,9 +319,21 @@ public class BookDAOImpl{
 //			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
 		}
 	}
+
 	public void viewBooksByTitleAuthorGenre() {
+		con = DBConnection.getConnection();
 		String query = "SELECT title, author, genre FROM book ";
 		try {
 			Statement ps = con.createStatement();
@@ -256,8 +342,8 @@ public class BookDAOImpl{
 			boolean hasBooks = false;
 			while (rs.next()) {
 				hasBooks = true;
-				System.out.println(rs.getString("title") + " | " + rs.getString("author")+
-							" | "+ rs.getString("genre"));
+				System.out.println(
+						rs.getString("title") + " | " + rs.getString("author") + " | " + rs.getString("genre"));
 			}
 
 			if (!hasBooks) {
@@ -266,9 +352,18 @@ public class BookDAOImpl{
 //			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
 		}
-		
+
 	}
-	
 
 }

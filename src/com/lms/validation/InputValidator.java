@@ -14,7 +14,7 @@ public class InputValidator {
 	
 	 
 	public boolean verifyId(int id) {
-		Connection con = DBConnection.getConnection();
+		Connection con = null;
 		String query = "SELECT id FROM book WHERE id = ?;";
 		try {
 			PreparedStatement prepareStatement = con.prepareStatement(query);
@@ -30,6 +30,14 @@ public class InputValidator {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if(con != null) {
+					con.close();
+				}
+			} catch(SQLException e){
+				e.printStackTrace();
+			}
 		}
 		System.out.println("End");
 		return false;

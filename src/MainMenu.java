@@ -15,7 +15,7 @@ public class MainMenu {
 		
 		boolean entry = true;
 		while(entry) {
-			System.out.println("1. Add Book\n2. Update Book\n3. Search Book\n4. View All Books \n5. Delete Book\n6. Exit\nChoose Operations:");
+			System.out.print("1. Add Book\n2. Update Book\n3. Search Book\n4. View All Books \n5. Delete Book\n6. Exit\nChoose Operations:");
 			int choose = input.nextInt();
 			switch(choose) {
 				case 1 ->{
