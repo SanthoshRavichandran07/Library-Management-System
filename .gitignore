@@ -13,3 +13,8 @@ lib/*
 
 ### Executable Files ###
 *.exe
+
+## Ignore IDE's configs
+.idea/
+.vscode/
+.zed/
