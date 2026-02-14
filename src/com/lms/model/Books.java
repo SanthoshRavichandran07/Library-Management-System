@@ -1,31 +1,30 @@
 package com.lms.model;
 
-public class Book {
+public class Books {
 	private int id;
 	private String title;
 	private String author;
 	private int year;
 	private String publisherName;
 	private String genre;
+	private String availability;
 	
+	public Books(){}
 	
-	public Book(){}
-	
-	public Book( String title, String author, int year, String publisherName, String genre){
+	public Books( String title, String author, int year, String publisherName, String genre, String availability){
 //		this.id = id;
 		this.title = title;
 		this.author = author;
 		this.year = year;
 		this.publisherName = publisherName;
 		this.genre = genre;
+		this.availability = availability;
 	}
 	
 	// setters and getters
 	
 	// Book Id
-//	public void setId(int id) {
-//		this.id = id;
-//	}
+
 	public int getId() {
 		return id;
 	}
@@ -63,5 +62,11 @@ public class Book {
 	}
 	public String getGenre() {
 		return genre;
+	}
+	public void setAvailability(String availability) {
+		this.availability = availability;
+	}
+	public String getAvailability() {
+		return availability;
 	}
 }

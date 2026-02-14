@@ -1,8 +1,8 @@
-package com.lms.book;
+package com.lms.DAO;
 
 import java.util.Scanner;
 
-import com.lms.model.Book;
+import com.lms.model.Books;
 import com.lms.validation.InputValidator;
 
 public class BookInput implements BookDAO{
@@ -49,8 +49,14 @@ public class BookInput implements BookDAO{
 			System.err.println("Genre only contains A - Z and/or a-z");
 			return;
 		}
+		System.out.print("Enter Availability (Yes / No): ");
+		String availability = input.nextLine();
+		if(!validate.validAvailability(availability)) {
+			System.err.println("Availability only contains yes or no");
+			return;
+		}
 		
-		setInput.addBook(new Book(title,author,year,publisherName,genre));
+		setInput.addBook(new Books(title,author,year,publisherName,genre, availability));
 	}
 
 	@Override
@@ -63,11 +69,11 @@ public class BookInput implements BookDAO{
 			System.err.println("Id only contains whole numbers");
 			return;
 		}
-		if (validate.verifyId(id)) {
+		if (validate.verifyBookId(id)) {
 			boolean flag = true;
 			while (flag) {
 				System.out.println(
-						"1. Title\n2. Author Name\n3. Published Year\n4. Publisher Name\n5. Genre\n6. Go Back");
+						"1. Title\n2. Author Name\n3. Published Year\n4. Publisher Name\n5. Genre\n6. Availability\n7. Go Back");
 				System.out.println("Choose what you want to update...");
 				int userInput = input.nextInt();
 				input.nextLine(); // consume newline
@@ -83,7 +89,7 @@ public class BookInput implements BookDAO{
 						System.err.println("Book Title only contains set of characters and/or sentences.");
 						break;
 					}
-					query = "UPDATE book SET title = ? WHERE id=?";
+					query = "UPDATE books SET title = ? WHERE id=?";
 				}
 				case 2 -> {
 					System.out.print("Enter Name of Author: ");
@@ -92,7 +98,7 @@ public class BookInput implements BookDAO{
 						System.err.println("Author name only contains A - Z and/or a-z");
 						break;
 					}
-					query = "UPDATE book SET author = ? WHERE id=?";
+					query = "UPDATE books SET author = ? WHERE id=?";
 				}
 				case 3 -> {
 					System.out.print("Enter Published Year: ");
@@ -101,7 +107,7 @@ public class BookInput implements BookDAO{
 						System.err.println("Ensure the entered year was correct");
 						break;
 					}
-					query = "UPDATE book SET yearPublished = ? WHERE id=?";
+					query = "UPDATE books SET yearPublished = ? WHERE id=?";
 				}
 				case 4 -> {
 					System.out.print("Enter Publisher Name: ");
@@ -110,7 +116,7 @@ public class BookInput implements BookDAO{
 						System.err.println("Publisher Name only contains A - Z and/or a-z");
 						break;
 					}
-					query = "UPDATE book SET publisher = ? WHERE id=?";
+					query = "UPDATE books SET publisher = ? WHERE id=?";
 				}
 				case 5 -> {
 					System.out.print("Enter Genre Type: ");
@@ -119,10 +125,22 @@ public class BookInput implements BookDAO{
 						System.err.println("Genre only contains A - Z and/or a-z");
 						break;
 					}
-					query = "UPDATE book SET genre = ? WHERE id=?";
+					query = "UPDATE books SET genre = ? WHERE id=?";
 					System.out.println("----------");
 				}
-				case 6 -> {
+				case 6->{
+					System.out.print("Enter Availability (Yes / No): ");
+					value = input.nextLine();
+					if(!validate.validAvailability((String) value)) {
+						System.err.println("Availability only contains yes or no");
+						return;
+					}
+					
+					
+					setInput.updateBookAvailability(id, value);
+					return;
+				}
+				case 7 -> {
 					System.out.println("Thank you!");
 					flag = false;
 				}
@@ -144,8 +162,8 @@ public class BookInput implements BookDAO{
 
 	@Override
 	public void searchBook() {
-		boolean flag = true;
-		while (flag) {
+		boolean searchBook = true;
+		while (searchBook) {
 			System.out.println("---- Search Book ----");
 			System.out.println("1. ID\n2. Title\n3. Author Name\n4. Published Year\n5. Publisher Name\n6. Genre\n7. Go Back");
 			System.out.println("Search by:");
@@ -161,7 +179,7 @@ public class BookInput implements BookDAO{
 						System.err.println("Id only contains whole numbers");
 						break;
 					}
-					query = "SELECT * FROM book WHERE id=?";
+					query = "SELECT * FROM books WHERE id=?";
 				}
 				case 2 -> {
 					System.out.print("Enter Book Title: ");
@@ -170,7 +188,7 @@ public class BookInput implements BookDAO{
 						System.err.println("Book Title only contains set of characters and/or sentences");
 						break;
 					}
-					query = "SELECT * FROM book WHERE title=?";
+					query = "SELECT * FROM books WHERE title=?";
 				}
 				case 3 -> {
 					System.out.print("Enter Name of Author: ");
@@ -188,7 +206,7 @@ public class BookInput implements BookDAO{
 						System.err.println("Ensure the entered year was correct");
 						break;
 					}
-					query = "SELECT * FROM book WHERE year=?";
+					query = "SELECT * FROM books WHERE year=?";
 					
 				}
 				case 5 -> {
@@ -198,7 +216,7 @@ public class BookInput implements BookDAO{
 						System.err.println("Publisher name only contains A - Z and/or a-z");
 						break;
 					}
-					query = "SELECT * FROM book WHERE publisher=?";
+					query = "SELECT * FROM books WHERE publisher=?";
 				}
 				case 6 -> {
 					System.out.print("Enter Genre Type: ");
@@ -207,11 +225,11 @@ public class BookInput implements BookDAO{
 						System.err.println("Genre only contains set of characters and/or words and allowed symbol is ',' (comma)");
 						break;
 					}
-					query = "SELECT * FROM book WHERE genre=?";
+					query = "SELECT * FROM books WHERE genre=?";
 				}
 				case 7 -> {
 					System.out.println("Thank you...!");
-					flag = false;
+					searchBook = false;
 				}
 				default -> {
 					System.out.println("Invalid Input...!");
@@ -229,7 +247,7 @@ public class BookInput implements BookDAO{
 		
 		boolean viewBook = true;
 		while(viewBook) {
-			System.out.print("1. View All Books \n2. View Books after a year\n3. View Books between some year\n4. View Books based on title\n5. View Books by Title \n6. View Books by Year\n7. View Title, Author & Genre\n8. Go Back <-\nChoose Options:");
+			System.out.print("1. View All Books \n2. View Books after a year\n3. View Books between some year\n4. View Books based on title\n5. View Books by Title \n6. View Books by Year\n7. View Title, Author & Genre\n8. View Availble Books\n9. View Unavailable Books\n10. Go Back <-\nChoose Options:");
 			int viewBookInput = input.nextInt();
 			switch(viewBookInput) {
 				case 1->{
@@ -292,6 +310,12 @@ public class BookInput implements BookDAO{
 					
 				}
 				case 8->{
+					setInput.viewAvailableBooks();
+				}
+				case 9->{
+					setInput.viewUnAvailableBooks();
+				}
+				case 10->{
 					System.out.println("Thank you...");
 					viewBook = false;
 					
@@ -314,7 +338,7 @@ public class BookInput implements BookDAO{
 			System.err.println("Id only contains whole numbers");
 			return;
 		}
-		if(validate.verifyId(id)) {
+		if(validate.verifyBookId(id)) {
 			setInput.deleteBook(id);
 		}else {
 			System.out.println("Given Book not in Library");
