@@ -1,4 +1,4 @@
-package com.lms.DAO;
+package com.lms.dao;
 
 import java.util.Scanner;
 
@@ -20,7 +20,7 @@ public class BookInput implements BookDAO{
 		System.out.println("---- Add Book ----");		
 		System.out.print("Enter Book Title: ");
 		String title = input.nextLine();
-		if(!validate.validNamePattern(title)) {
+		if(!validate.validTitlePattern(title)) {
 			System.err.println("Id only contains whole numbers");
 			return;
 		}
@@ -39,7 +39,7 @@ public class BookInput implements BookDAO{
 		}
 		System.out.print("Enter Publisher Name: ");
 		String publisherName = input.nextLine();
-		if(!validate.validNamePattern(publisherName)) {
+		if(!validate.validPublisherPattern(publisherName)) {
 			System.err.println("Publisher Name only contains A - Z and/or a-z");
 			return;
 		}
@@ -85,7 +85,7 @@ public class BookInput implements BookDAO{
 				case 1 -> {
 					System.out.print("Enter Book Title: ");
 					value = input.nextLine();
-					if(!validate.validNamePattern((String)value)) {
+					if(!validate.validTitlePattern((String)value)) {
 						System.err.println("Book Title only contains set of characters and/or sentences.");
 						break;
 					}
@@ -112,7 +112,7 @@ public class BookInput implements BookDAO{
 				case 4 -> {
 					System.out.print("Enter Publisher Name: ");
 					value = input.nextLine();
-					if(!validate.validNamePattern((String)value)) {
+					if(!validate.validPublisherPattern((String)value)) {
 						System.err.println("Publisher Name only contains A - Z and/or a-z");
 						break;
 					}
@@ -184,7 +184,7 @@ public class BookInput implements BookDAO{
 				case 2 -> {
 					System.out.print("Enter Book Title: ");
 					value = input.nextLine();
-					if(!validate.validNamePattern((String)value)) {
+					if(!validate.validTitlePattern((String)value)) {
 						System.err.println("Book Title only contains set of characters and/or sentences");
 						break;
 					}
@@ -212,7 +212,7 @@ public class BookInput implements BookDAO{
 				case 5 -> {
 					System.out.print("Enter Publisher Name: ");
 					value = input.nextLine();
-					if(!validate.validNamePattern((String)value)) {
+					if(!validate.validPublisherPattern((String)value)) {
 						System.err.println("Publisher name only contains A - Z and/or a-z");
 						break;
 					}
@@ -286,7 +286,7 @@ public class BookInput implements BookDAO{
 					input.nextLine();
 					System.out.println("Enter Title");
 					String title = input.nextLine();
-					if(!validate.validNamePattern(title)) {
+					if(!validate.validTitlePattern(title)) {
 						System.err.println("Title only have set of characters or sentence");
 						return;
 					}

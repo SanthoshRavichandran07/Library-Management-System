@@ -1,10 +1,15 @@
-package com.lms.DAO;
+//package com.lms.dao;
+//
+//public class MemberInput {
+//
+//}
+
+package com.lms.dao;
 
 import com.lms.model.Members;
 
 import java.util.Scanner;
 
-import com.lms.DAO.MemberDAOImpl;
 import com.lms.validation.InputValidator;
 
 public class MemberInput implements MemberDAO {
@@ -107,8 +112,11 @@ public class MemberInput implements MemberDAO {
 	@Override
 	public void deleteMember() {
 		System.out.println("---- Delete Member ----");
-		System.out.print("Enter Member Id: ");
+		System.out.print("To Exit Press (0)\nEnter Member Id: ");
 		int id = input.nextInt();
+		if(id ==0) {
+			return;
+		}
 		if (!validate.validId(id)) {
 			System.err.println("Id only contains whole numbers");
 			return;
@@ -188,8 +196,8 @@ public class MemberInput implements MemberDAO {
 
 	@Override
 	public void viewMember() {
-		boolean viewMember = true;
-		while (viewMember) {
+		boolean viewMemberChk = true;
+		while (viewMemberChk) {
 			System.out.print(
 					"1. View All Members \n2. View Members By Name\n3. View Members By Email\n4. View Members By Role\n5. Go Back <-\nChoose Options:");
 			int viewBookInput = input.nextInt();
@@ -234,7 +242,7 @@ public class MemberInput implements MemberDAO {
 			}
 			case 5 -> {
 				System.out.println("Thank you...");
-				viewMember = false;
+				viewMemberChk = false;
 
 			}
 			default -> {
@@ -244,6 +252,11 @@ public class MemberInput implements MemberDAO {
 			}
 
 		}
+	}
+
+	@Override
+	public void viewMemberDetails(int id) {
+		setMember.viewDetails(id);
 	}
 
 }

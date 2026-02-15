@@ -1,4 +1,4 @@
-package com.lms.DAO;
+package com.lms.dao;
 
 
 public interface MemberDAO {
@@ -7,4 +7,5 @@ public interface MemberDAO {
 	void deleteMember();
 	void searchMember();
 	void viewMember();
+	void viewMemberDetails(int id);
 }

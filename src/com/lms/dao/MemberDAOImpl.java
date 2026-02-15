@@ -1,4 +1,11 @@
-package com.lms.DAO;
+//package com.lms.dao;
+//
+//public class MemberDAOImpl {
+//
+//}
+
+
+package com.lms.dao;
 
 import com.lms.util.DBConnection;
 
@@ -6,7 +13,7 @@ import java.sql.*;
 
 import com.lms.model.Members;
 
-public class MemberDAOImpl{
+public class MemberDAOImpl {
 
 	Connection con = null;
 
@@ -34,6 +41,7 @@ public class MemberDAOImpl{
 	}
 
 	public void updateMember(int id, Object value, String query) {
+		con = DBConnection.getConnection();
 		try {
 			PreparedStatement ps = con.prepareStatement(query);
 			if (value instanceof String) {
@@ -58,13 +66,29 @@ public class MemberDAOImpl{
 
 	}
 
-	
 	public void deleteMember(int id) {
-		
-		
+		con = DBConnection.getConnection();
+		String query = "DELETE FROM members WHERE id =?";
+		try {
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, id);
+			ps.executeUpdate();
+			System.out.println("Member Successfully deleted...!");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
 	}
 
-	
 	public void searchMember(Object value, String query) {
 		con = DBConnection.getConnection();
 		try {
@@ -76,19 +100,16 @@ public class MemberDAOImpl{
 			}
 			ResultSet rs = ps.executeQuery();
 
-			boolean hasBooks = false;
+			boolean hasMembers = false;
 			while (rs.next()) {
-				hasBooks = true;
-				System.out.println(rs.getInt("id") + " | " + 
-								   rs.getString("name") + " | " + 
-						           rs.getString("email")+ " | " +  
-								   rs.getString("role"));
+				hasMembers = true;
+				System.out.println(rs.getInt("id") + " | " + rs.getString("name") + " | " + rs.getString("email")
+						+ " | " + rs.getString("role"));
 			}
 
-			if (!hasBooks) {
+			if (!hasMembers) {
 				System.out.println("No books found.");
 			}
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -103,7 +124,6 @@ public class MemberDAOImpl{
 		}
 	}
 
-	
 	public void viewAllMembers() {
 		con = DBConnection.getConnection();
 		String query = "SELECT * FROM members ORDER BY id";
@@ -114,10 +134,8 @@ public class MemberDAOImpl{
 			boolean hasBooks = false;
 			while (rs.next()) {
 				hasBooks = true;
-				System.out.println(rs.getInt("id") + " | " + 
-								   rs.getString("name") + " | " + 
-						           rs.getString("email")+ " | " +  
-								   rs.getString("role"));
+				System.out.println(rs.getInt("id") + " | " + rs.getString("name") + " | " + rs.getString("email")
+						+ " | " + rs.getString("role"));
 			}
 
 			if (!hasBooks) {
@@ -136,9 +154,9 @@ public class MemberDAOImpl{
 			}
 		}
 	}
-	
+
 	public void viewMemberByName(String name) {
-		
+
 		con = DBConnection.getConnection();
 		String query = "SELECT * FROM members WHERE name LIKE ?";
 		try {
@@ -149,10 +167,8 @@ public class MemberDAOImpl{
 			boolean hasBooks = false;
 			while (rs.next()) {
 				hasBooks = true;
-				System.out.println(rs.getInt("id") + " | " + 
-						   rs.getString("name") + " | " + 
-				           rs.getString("email")+ " | " +  
-						   rs.getString("role"));
+				System.out.println(rs.getInt("id") + " | " + rs.getString("name") + " | " + rs.getString("email")
+						+ " | " + rs.getString("role"));
 			}
 
 			if (!hasBooks) {
@@ -170,9 +186,9 @@ public class MemberDAOImpl{
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
-	
+
 	public void viewMemberByEmail(String email) {
 		con = DBConnection.getConnection();
 		String query = "SELECT * FROM members WHERE email LIKE ?";
@@ -184,10 +200,8 @@ public class MemberDAOImpl{
 			boolean hasBooks = false;
 			while (rs.next()) {
 				hasBooks = true;
-				System.out.println(rs.getInt("id") + " | " + 
-						   rs.getString("name") + " | " + 
-				           rs.getString("email")+ " | " +  
-						   rs.getString("role"));
+				System.out.println(rs.getInt("id") + " | " + rs.getString("name") + " | " + rs.getString("email")
+						+ " | " + rs.getString("role"));
 			}
 
 			if (!hasBooks) {
@@ -206,7 +220,7 @@ public class MemberDAOImpl{
 			}
 		}
 	}
-	
+
 	public void viewMemberByRole(String role) {
 		con = DBConnection.getConnection();
 		String query = "SELECT * FROM members WHERE role LIKE ?";
@@ -218,13 +232,44 @@ public class MemberDAOImpl{
 			boolean hasBooks = false;
 			while (rs.next()) {
 				hasBooks = true;
-				System.out.println(rs.getInt("id") + " | " + 
-						   rs.getString("name") + " | " + 
-				           rs.getString("email")+ " | " +  
-						   rs.getString("role"));
+				System.out.println(rs.getInt("id") + " | " + rs.getString("name") + " | " + rs.getString("email")
+						+ " | " + rs.getString("role"));
 			}
 
 			if (!hasBooks) {
+				System.out.println("No Members found.");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void viewDetails(int id) {
+		con = DBConnection.getConnection();
+		String query = "SELECT * FROM members WHERE id =?";
+		try {
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+
+			boolean hasMembers= false;
+			while (rs.next()) {
+				hasMembers = true;
+				System.out.println("Member Id: " + rs.getInt("id"));
+				System.out.println("Name: " + rs.getString("name"));
+				System.out.println("Email: " + rs.getString("email"));
+			}
+
+			if (!hasMembers) {
 				System.out.println("No Members found.");
 			}
 		} catch (SQLException e) {

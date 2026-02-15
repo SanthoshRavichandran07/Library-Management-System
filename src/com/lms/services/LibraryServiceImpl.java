@@ -2,12 +2,12 @@ package com.lms.services;
 
 import java.util.Scanner;
 
-import com.lms.DAO.BookDAO;
-import com.lms.DAO.BookInput;
-import com.lms.DAO.MemberDAO;
-import com.lms.DAO.MemberInput;
-import com.lms.DAO.TransactionDAO;
-import com.lms.DAO.TransactionDAOImpl;
+import com.lms.dao.BookDAO;
+import com.lms.dao.BookInput;
+import com.lms.dao.MemberDAO;
+import com.lms.dao.MemberInput;
+import com.lms.dao.TransactionDAO;
+import com.lms.dao.TransactionDAOImpl;
 import com.lms.model.Transactions;
 import com.lms.validation.InputValidator;
 
@@ -24,7 +24,7 @@ public class LibraryServiceImpl implements LibraryService {
 
 	}
 
-	@Override
+	
 	public void books() {
 		boolean bookEntry = true;
 		while (bookEntry) {
@@ -63,7 +63,7 @@ public class LibraryServiceImpl implements LibraryService {
 		}
 	}
 
-	@Override
+	
 	public void members() {
 		boolean memberEntry = true;
 		while (memberEntry) {
@@ -106,12 +106,14 @@ public class LibraryServiceImpl implements LibraryService {
 		}
 	}
 
-	@Override
+	
 	public void transactions() {
 		transaction.viewTransactions();
+		System.out.println("----------");
+
 	}
 
-	@Override
+	
 	public void issueBook() {
 		System.out.println("----- Issue Book -----");
 		System.out.print("Enter Book Id:");
@@ -138,7 +140,7 @@ public class LibraryServiceImpl implements LibraryService {
 
 	}
 
-	@Override
+	
 	public void returnBook() {
 		System.out.println("----- Return Book -----");
 		System.out.print("Enter Transaction Id:");
@@ -155,6 +157,76 @@ public class LibraryServiceImpl implements LibraryService {
 			System.err.println("Ensure the entered id is correct");
 		}
 
+	}
+	@Override
+	public void admin(int id) {
+		if(!validate.verifyAdmin(id)) {
+			return;
+		}
+		boolean entry = true;
+		while (entry) {
+			System.out.print(
+					"1. Books\n2. Members\n3. Transactions\n4. Issue Book\n5. Return Book\n6. Exit\nChoose Operations:");
+			int choose = input.nextInt();
+			switch (choose) {
+			case 1 -> {
+				books();
+				System.out.println("----------");
+			}
+			case 2 -> {
+				members();
+				System.out.println("----------");
+			}
+			case 3 -> {
+				transactions();
+				System.out.println("----------");
+			}
+			case 4 -> {
+
+				issueBook();
+				System.out.println("----------");
+			}
+			case 5 -> {
+				returnBook();
+				System.out.println("----------");
+			}
+			case 6 -> {
+				System.out.println("Good Bye...!");
+				entry = false;
+			}
+			default -> {
+				System.out.println("Invalid Choice....!");
+			}
+			}
+		}
+	}
+	
+	@Override
+	public void user(int id) {
+		boolean entry = true;
+		member.viewMemberDetails(id);
+		while (entry) {
+			System.out.print(
+					"1. Show Books\n2. Transactions\n3. Exit\nChoose Operations:");
+			int choose = input.nextInt();
+			switch (choose) {
+			case 1 -> {
+				book.viewBooks();
+				System.out.println("----------");
+			}
+			case 2 -> {
+				transaction.viewMemberTransactions(id);
+				System.out.println("----------");
+			}
+			case 3 -> {
+				System.out.println("Good Bye...!");
+				entry = false;
+			}
+			default -> {
+				System.out.println("Invalid Choice....!");
+			}
+			}
+		}
 	}
 
 }

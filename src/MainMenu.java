@@ -4,58 +4,37 @@ import java.util.Scanner;
 
 import com.lms.services.LibraryService;
 import com.lms.services.LibraryServiceImpl;
+import com.lms.validation.InputValidator;
 
 public class MainMenu {
 
 	static Scanner input = new Scanner(System.in);
 
 	public static void main(String[] args) {
+		InputValidator validate = new InputValidator();
 		
 		LibraryService library = new LibraryServiceImpl();
 		System.out.println("Library Management System");
 		System.out.println("-------------------------");
-
-		boolean entry = true;
-		while (entry) {
-			System.out.print(
-					"1. Books\n2. Members\n3. Transactions\n4. Issue Book\n5. Return Book\n6. Exit\nChoose Operations:");
-			int choose = input.nextInt();
-			switch (choose) {
-			case 1 -> {
-				library.books();
-				System.out.println("----------");
-			}
-			case 2 -> {
-				library.members();
-				System.out.println("----------");
-			}
-			case 3 -> {
-				library.transactions();
-				System.out.println("----------");
-			}
-			case 4 -> {
-
-				library.issueBook();
-				System.out.println("----------");
-			}
-			case 5 -> {
-				library.returnBook();
-				System.out.println("----------");
-			}
-			case 6 -> {
-				System.out.println("Good Bye...!");
-				entry = false;
-			}
-			default -> {
-				System.out.println("Invalid Choice....!");
-			}
-			}
+		
+		System.out.println("Welcome\nEnter User ID:");
+		int userId = input.nextInt();
+		input.nextLine();
+		if(!validate.verifyMemberId(userId)) {
+			System.err.println("The User ID not present in library");
+			
 		}
-	}
+		if(validate.verifyAdmin(userId)) {
+			System.out.println("Logined as Admin");
+			library.admin(userId);
+			System.out.println("----------");
+		}
+		if(validate.verifyUser(userId)) {
+			System.out.println("Logined as User");
+			library.user(userId);
+			System.out.println("----------");
+		}
 
-	private static LibraryService LibraryServiceImpl() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+}
 
 }

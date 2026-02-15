@@ -1,4 +1,4 @@
-package com.lms.DAO;
+package com.lms.dao;
 
 public interface BookDAO {
 	void addBook();

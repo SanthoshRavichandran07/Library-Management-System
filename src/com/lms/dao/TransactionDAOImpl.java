@@ -1,4 +1,4 @@
-package com.lms.DAO;
+package com.lms.dao;
 
 import java.sql.*;
 import java.sql.SQLException;
@@ -61,8 +61,8 @@ public class TransactionDAOImpl implements TransactionDAO {
 			ResultSet rs = st.executeQuery(query);
 			while (rs.next()) {
 				hasValue = true;
-				System.out.println(rs.getInt("id") + " | " + rs.getInt("book_id") + " | " + rs.getInt("member_id") + " | "
-						+ rs.getString("issue_date") + " | " + rs.getString("return_date") + " | "
+				System.out.println(rs.getInt("id") + " | " + rs.getInt("book_id") + " | " + rs.getInt("member_id")
+						+ " | " + rs.getString("issue_date") + " | " + rs.getString("return_date") + " | "
 						+ rs.getString("status"));
 			}
 			if (!hasValue) {
@@ -78,7 +78,37 @@ public class TransactionDAOImpl implements TransactionDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+		}
+	}
 
+	@Override
+	public void viewMemberTransactions(int id) {
+
+		con = DBConnection.getConnection();
+		String query = "SELECT book_id, issue_date, return_date, status FROM transactions WHERE id = ?";
+		try {
+			Statement st = con.createStatement();
+			boolean hasValue = false;
+			ResultSet rs = st.executeQuery(query);
+			while (rs.next()) {
+				hasValue = true;
+				System.out.println(rs.getInt("book_id") + " | " + rs.getInt("member_id")
+						+ " | " + rs.getString("issue_date") + " | " + rs.getString("return_date") + " | "
+						+ rs.getString("status"));
+			}
+			if (!hasValue) {
+				System.out.println("No Transactions done...!");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
