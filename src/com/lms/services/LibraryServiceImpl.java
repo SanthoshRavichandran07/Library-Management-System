@@ -2,13 +2,13 @@ package com.lms.services;
 
 import java.util.Scanner;
 
+import com.lms.ui.BookInput;
+import com.lms.ui.MemberInput;
+import com.lms.model.Transactions;
 import com.lms.dao.BookDAO;
-import com.lms.dao.BookInput;
 import com.lms.dao.MemberDAO;
-import com.lms.dao.MemberInput;
 import com.lms.dao.TransactionDAO;
 import com.lms.dao.TransactionDAOImpl;
-import com.lms.model.Transactions;
 import com.lms.validation.InputValidator;
 
 public class LibraryServiceImpl implements LibraryService {
@@ -18,12 +18,6 @@ public class LibraryServiceImpl implements LibraryService {
 	MemberDAO member = new MemberInput();
 	TransactionDAO transaction = new TransactionDAOImpl();
 	InputValidator validate = new InputValidator();
-
-	public static void main(String[] args) {
-		LibraryServiceImpl library = new LibraryServiceImpl();
-
-	}
-
 	
 	public void books() {
 		boolean bookEntry = true;
@@ -228,5 +222,4 @@ public class LibraryServiceImpl implements LibraryService {
 			}
 		}
 	}
-
 }

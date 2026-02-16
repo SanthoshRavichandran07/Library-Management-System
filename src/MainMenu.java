@@ -17,22 +17,30 @@ public class MainMenu {
 		System.out.println("Library Management System");
 		System.out.println("-------------------------");
 		
-		System.out.println("Welcome\nEnter User ID:");
-		int userId = input.nextInt();
-		input.nextLine();
-		if(!validate.verifyMemberId(userId)) {
-			System.err.println("The User ID not present in library");
+		boolean login = true;
+		while(login) {
 			
-		}
-		if(validate.verifyAdmin(userId)) {
-			System.out.println("Logined as Admin");
-			library.admin(userId);
-			System.out.println("----------");
-		}
-		if(validate.verifyUser(userId)) {
-			System.out.println("Logined as User");
-			library.user(userId);
-			System.out.println("----------");
+			System.out.print("Welcome\nPress 0 to Exit\nEnter User ID:");
+			int userId = input.nextInt();
+			input.nextLine();
+			if (userId ==0) {
+				System.err.println("Finished...!");
+				break;
+			}
+			if(!validate.verifyMemberId(userId)) {
+				System.err.println("The User ID not present in library");
+				
+			}
+			if(validate.verifyAdmin(userId)) {
+				System.out.println("Logined as Admin");
+				library.admin(userId);
+				System.out.println("----------");
+			}
+			if(validate.verifyUser(userId)) {
+				System.out.println("Logined as User");
+				library.user(userId);
+				System.out.println("----------");
+			}
 		}
 
 }

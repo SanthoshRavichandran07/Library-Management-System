@@ -13,7 +13,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 	@Override
 	public void issueBook(Transactions transaction) {
 		con = DBConnection.getConnection();
-		String query = "INSERT INTO transactions(book_id, member_id, issue_date, return_date, status) VALUES(?,?,NOW(),DATE_ADD(NOW(), INTERVAL 30 DAY),'ISSUED')";
+		String query = "INSERT INTO transactions(book_id, member_id, issue_date, return_date, status) VALUES(?,?,NOW(),DATE_ADD(NOW(), INTERVAL 15 DAY),'ISSUED')";
 		try (PreparedStatement ps = con.prepareStatement(query)) {
 			ps.setInt(1, transaction.getBookId());
 			ps.setInt(2, transaction.getMemberId());
@@ -61,9 +61,12 @@ public class TransactionDAOImpl implements TransactionDAO {
 			ResultSet rs = st.executeQuery(query);
 			while (rs.next()) {
 				hasValue = true;
-				System.out.println(rs.getInt("id") + " | " + rs.getInt("book_id") + " | " + rs.getInt("member_id")
-						+ " | " + rs.getString("issue_date") + " | " + rs.getString("return_date") + " | "
-						+ rs.getString("status"));
+				System.out.println(rs.getInt("id") + " | " + 
+								   rs.getInt("book_id") + " | " + 
+								   rs.getInt("member_id")+ " | " + 
+								   rs.getString("issue_date") + " | " + 
+								   rs.getString("return_date") + " | " +
+						           rs.getString("status"));
 			}
 			if (!hasValue) {
 				System.out.println("No Transactions done...!");
@@ -85,16 +88,20 @@ public class TransactionDAOImpl implements TransactionDAO {
 	public void viewMemberTransactions(int id) {
 
 		con = DBConnection.getConnection();
-		String query = "SELECT book_id, issue_date, return_date, status FROM transactions WHERE id = ?";
+		String query = "SELECT t.id As transaction_id, b.id As book_id, b.title, b.author, b.yearPublished, t.issue_date, t.return_date, t.status\r\n"
+				+ "FROM transactions t \r\n" + "inner join books b on t.book_id = b.id \r\n"
+				+ "inner join members m on t.member_id = m.id\r\n" + "where t.member_id=?";
 		try {
-			Statement st = con.createStatement();
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1,id);
 			boolean hasValue = false;
-			ResultSet rs = st.executeQuery(query);
+			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				hasValue = true;
-				System.out.println(rs.getInt("book_id") + " | " + rs.getInt("member_id")
-						+ " | " + rs.getString("issue_date") + " | " + rs.getString("return_date") + " | "
-						+ rs.getString("status"));
+				System.out.println(rs.getInt("transaction_id") + " | " + rs.getInt("book_id") + " | " +  
+				rs.getString("title")+ " | " + rs.getString("author") + " | "+
+				rs.getInt("yearPublished") + " | "+ rs.getDate("issue_date") + " | " + 
+				rs.getDate("return_date") + " | " + rs.getString("status"));
 			}
 			if (!hasValue) {
 				System.out.println("No Transactions done...!");

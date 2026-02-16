@@ -1,11 +1,7 @@
-//package com.lms.dao;
-//
-//public class MemberInput {
-//
-//}
+package com.lms.ui;
 
-package com.lms.dao;
-
+import com.lms.dao.MemberDAO;
+import com.lms.dao.MemberDAOImpl;
 import com.lms.model.Members;
 
 import java.util.Scanner;
@@ -84,7 +80,7 @@ public class MemberInput implements MemberDAO {
 				case 3 -> {
 					System.out.print("Enter Role: ");
 					value = input.nextInt();
-					if (!validate.validYear((int) value)) {
+					if (!validate.validNamePattern((String) value)) {
 						System.err.println("Ensure the entered role was correct");
 						break;
 					}
@@ -104,7 +100,7 @@ public class MemberInput implements MemberDAO {
 			}
 
 		} else {
-			System.out.println("Given Book Not present in Library...!");
+			System.out.println("Given Member Not registered with Library...!");
 
 		}
 	}
@@ -160,7 +156,7 @@ public class MemberInput implements MemberDAO {
 			case 3 -> {
 				System.out.print("Enter the Email: ");
 				value = input.nextInt();
-				if (!validate.validYear((int) value)) {
+				if (!validate.validEmail((String) value)) {
 					System.err.println("Ensure the entered Email was correct");
 					break;
 				}
@@ -168,7 +164,7 @@ public class MemberInput implements MemberDAO {
 				
 			}
 			case 4 -> {
-				System.out.print("Enter the Role: ");
+				System.out.print("Enter the Role (ADMIN / USER): ");
 				value = input.nextLine();
 				if (!validate.validNamePattern((String) value)) {
 					System.err.println("Ensure the entered Role was correct!");
@@ -231,7 +227,7 @@ public class MemberInput implements MemberDAO {
 				System.out.println("----------");
 			}
 			case 4 -> {
-				System.out.print("Enter the Role:");
+				System.out.print("Enter the Role (ADMIN / USER)::");
 				String role = input.nextLine();
 				if (!validate.validNamePattern(role)) {
 					System.err.println("Ensure the entered year was correct");

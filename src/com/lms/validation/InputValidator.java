@@ -38,7 +38,7 @@ public class InputValidator {
 			while (result.next()) {
 				isAdmin = result.getString("role");
 			}
-			if (isAdmin.equals(ADMIN)) {
+			if (ADMIN.equals(isAdmin)) {
 				return true;
 			}
 		} catch (SQLException e) {
@@ -65,11 +65,11 @@ public class InputValidator {
 			prepareStatement.setInt(1, id);
 
 			ResultSet result = prepareStatement.executeQuery();
-			String isAdmin = null;
+			String isUser = null;
 			while (result.next()) {
-				isAdmin = result.getString("role");
+				isUser = result.getString("role");
 			}
-			if (isAdmin.equals(USER)) {
+			if (USER.equals(isUser)) {
 				return true;
 			}
 		} catch (SQLException e) {

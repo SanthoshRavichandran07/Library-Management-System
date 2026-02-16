@@ -1,10 +1,3 @@
-//package com.lms.dao;
-//
-//public class MemberDAOImpl {
-//
-//}
-
-
 package com.lms.dao;
 
 import com.lms.util.DBConnection;
@@ -108,7 +101,7 @@ public class MemberDAOImpl {
 			}
 
 			if (!hasMembers) {
-				System.out.println("No books found.");
+				System.out.println("No Member found.");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -1,6 +1,8 @@
 package com.lms.dao;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.lms.util.DBConnection;
 import com.lms.model.Books;
@@ -170,7 +172,8 @@ public class BookDAOImpl {
 
 	}
 
-	public void viewAllBooks() {
+	public List<Books> viewAllBooks() {
+		List <Books> books = new ArrayList<>();
 		con = DBConnection.getConnection();
 		String query = "SELECT * FROM books ORDER BY id";
 		try {
@@ -180,9 +183,11 @@ public class BookDAOImpl {
 			boolean hasBooks = false;
 			while (rs.next()) {
 				hasBooks = true;
-				System.out.println(rs.getInt("id") + " | " + rs.getString("title") + " | " + rs.getString("author")
-						+ " | " + rs.getInt("yearPublished") + " | " + rs.getString("publisher") + " | "
-						+ rs.getString("genre")+" | "+ convertAvailabilityToString(rs.getInt("availability")) );
+				Books book = new Books(rs.getString("title"),rs.getString("author"), rs.getInt("yearPublished"),rs.getString("publisher"),rs.getString("genre"),convertAvailabilityToString(rs.getInt("availability")) );
+				book.setId(rs.getInt("id"));
+				books.add(book);
+					
+				
 			}
 
 			if (!hasBooks) {
@@ -200,6 +205,7 @@ public class BookDAOImpl {
 				e.printStackTrace();
 			}
 		}
+		return books;
 	}
 
 	public void viewBooksAfterYear(int year) {

@@ -11,6 +11,7 @@ public class Books {
 	
 	public Books(){}
 	
+	
 	public Books( String title, String author, int year, String publisherName, String genre, String availability){
 //		this.id = id;
 		this.title = title;
@@ -27,6 +28,9 @@ public class Books {
 
 	public int getId() {
 		return id;
+	}
+	public void setId(int id) {
+		this.id=id;
 	}
 	// Book title
 	public void setTitle(String title) {

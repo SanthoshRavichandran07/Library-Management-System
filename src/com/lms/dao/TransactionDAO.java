@@ -6,5 +6,5 @@ public interface TransactionDAO {
 	public void issueBook(Transactions transaction);
 	public void returnBook(Transactions transaction);
 	public void viewTransactions();
-	public void viewMemberTransactions(int id);
+	public void viewMemberTransactions(int memberId);
 }
