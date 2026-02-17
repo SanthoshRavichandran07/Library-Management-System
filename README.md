@@ -78,7 +78,7 @@ src
 
 ## Setup Instructions
 1. Clone the repository:
-   ```bash
+   ```git
    git clone https://github.com/SanthoshRavichandran07/Library-Management-System.git
 
 2. Configure database:
@@ -111,20 +111,20 @@ src
     FOREIGN KEY (member_id) REFERENCES members(id)
     );
 
-  ```
+   ```
 
 3. Add a db.properties file in the project root:
-  ```
-    db.url=jdbc:mysql://localhost:3306/library_management_system_db
-    db.username=your_username
-    db.password=your_password
-  ```
+   ```properties
+     db.url=jdbc:mysql://localhost:3306/library_management_system_db
+     db.username=your_username
+     db.password=your_password
+   ```
 
 4. Compile and Run
-  ```
-    javac MainMenu.java
-    java MainMenu
-  ```
+   ```
+     javac MainMenu.java
+     java MainMenu
+   ```
 
 ---
 
